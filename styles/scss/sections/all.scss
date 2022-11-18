@@ -1,0 +1,214 @@
+.ecosystem {
+    position: relative;
+    overflow: hidden;
+    padding-block: 4rem;
+
+    @media screen and (min-width: 45em) {
+        padding-block: 5rem;
+    }
+
+    @media screen and (min-width: 70em) {
+        padding-block: 5.5rem;
+    }
+
+    &__container {
+        display: grid;
+        gap: 3rem;
+        width: min(90%, 82em);
+        margin-inline: auto;
+
+        .sun {
+            display: none;
+        }
+
+        @media (min-width: 45em) {
+            grid-template-areas: "text swiper";
+            grid-template-columns: 1fr 1fr;
+
+            .sun {
+                grid-area: sun;
+                transition: transform 300ms linear;
+            }
+
+            .text {
+                grid-area: text;
+            }
+
+            .swiper {
+                grid-area: swiper;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            grid-template-areas: "text swiper sun";
+            grid-template-columns: 1fr 1fr 0.5fr;
+            gap: 5rem;
+            align-items: center;
+
+            .text {
+                grid-area: text;
+
+                h2 {
+                    max-width: 12ch;
+                }
+
+                p {
+                    max-width: 45ch;
+                }
+            }
+
+            .swiper {
+                grid-area: swiper;
+            }
+
+            .sun {
+                display: unset;
+                grid-area: sun;
+                position: absolute;
+                right: -13.5rem;
+            }
+        }
+
+        @media (min-width: 1900px) {
+            grid-template-columns: 2fr 2.5fr 1fr;
+
+            .sun {
+                zoom: 1.2;
+            }
+        }
+    }
+
+    // Swiper login
+    .swiper {
+        --swiper-pagination-bullet-inactive-color: #e5e5e5;
+        --swiper-pagination-bullet-opacity: 1;
+
+        height: 25rem;
+        padding: 0 1rem;
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: #ff6b00;
+    }
+
+    .swiper-slide {
+        background-color: transparent;
+        padding: 1rem;
+
+        display: flex !important;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.25rem;
+
+        cursor: default;
+        position: relative;
+        transition: all 300ms ease;
+        transform: scale(0.9) !important;
+
+        &::after {
+            content: "";
+            position: absolute;
+            background: linear-gradient(180deg, #0b1626, #0b16265d);
+            inset: -10px;
+        }
+
+        h3 {
+            color: var(--clr-accent-orange, #ff6b00);
+            font-size: 1.75rem;
+            font-weight: 500;
+
+            &::before {
+                content: attr(data-count) ".";
+                font-size: 1.75rem;
+                color: var(--clr-accent-orange, #ff6b00);
+                margin-right: 0.25rem;
+            }
+        }
+    }
+
+    .swiper-slide-active {
+        transform: scale(1) !important;
+        filter: blur(0px);
+
+        &::after {
+            display: none;
+        }
+    }
+
+    .swiper-vertical > .swiper-pagination-bullets,
+    .swiper-pagination-vertical.swiper-pagination-bullets {
+        left: -0px;
+        z-index: -1;
+    }
+
+    // circle login
+    @mixin on-circle($item-count, $circle-size, $item-size) {
+        position: relative;
+        width: $circle-size;
+        height: $circle-size;
+        border-radius: 50%;
+        padding: 0;
+        list-style: none;
+
+        > * {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -($item-size / 2);
+            width: $item-size;
+            height: $item-size;
+
+            $angle: (-360 / $item-count);
+            $rot: 0;
+
+            @for $i from 1 through $item-count {
+                &:nth-of-type(#{$i}) {
+                    transform: rotate($rot * 1deg)
+                        translate($circle-size / 2)
+                        rotate($rot * -1deg);
+                }
+
+                $rot: $rot + $angle;
+            }
+        }
+    }
+
+    .circle-container {
+        @include on-circle(
+            $item-count: 10,
+            $circle-size: 28em,
+            $item-size: 5em
+        );
+
+        background-image: url("../../images/helte__hr-explore-sun.png");
+        background-size: 76%;
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        img {
+            display: block;
+            max-width: 100%;
+            transition: 0.15s;
+
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+
+        li {
+            transition: all 300ms ease;
+            zoom: (0.85);
+            cursor: pointer;
+            opacity: 0.4;
+            display: grid;
+            place-items: center;
+
+            &.active {
+                zoom: (1.15);
+                opacity: 1;
+            }
+        }
+    }
+}

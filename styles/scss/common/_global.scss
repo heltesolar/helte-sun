@@ -1,0 +1,39 @@
+$colors: (
+    "clr-neutral-100": #ffffff,
+    "clr-neutral-300": #d2d2d2,
+    "clr-neutral-700": #000000,
+
+    "clr-accent-blue": #004693,
+    "clr-accent-blue-dark": #0b1626,
+    "clr-accent-orange": #ff6b00,
+);
+
+:root {
+    @each $name, $value in $colors {
+        --#{$name}: #{$value};
+    }
+}
+
+:root {
+    --ff-primary: "Poppins", sans-serif;
+}
+
+html {
+    scroll-padding-top: 2rem;
+    font-size: 93.75%;
+
+    @media screen and (min-width: 45em) {
+        font-size: 100%;
+    }
+}
+
+body {
+    font-family: var(--ff-primary);
+
+    background-color: var(--clr-accent-blue-dark);
+    color: var(--clr-neutral-100);
+}
+
+.spacing {
+    padding-block: var(--spacing);
+}
